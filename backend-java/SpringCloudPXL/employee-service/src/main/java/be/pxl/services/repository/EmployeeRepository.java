@@ -1,6 +1,5 @@
 package be.pxl.services.repository;
 
-import be.pxl.services.api.response.EmployeeDto;
 import be.pxl.services.domain.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

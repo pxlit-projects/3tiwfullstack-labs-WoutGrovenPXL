@@ -1,8 +1,7 @@
 package be.pxl.services.api.controller;
 
 import be.pxl.services.api.request.EmployeeRequest;
-import be.pxl.services.api.response.EmployeeDto;
-import be.pxl.services.domain.Employee;
+import be.pxl.services.api.response.EmployeeDTO;
 import be.pxl.services.services.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,25 +18,25 @@ public class EmployeeController {
     private final IEmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeeDto> getEmployees() {
+    public List<EmployeeDTO> getEmployees() {
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmpolyeeById(@PathVariable Long id){
-        EmployeeDto employeeDto = employeeService.getEmployeeById(id);
+    public ResponseEntity<EmployeeDTO> getEmpolyeeById(@PathVariable Long id){
+        EmployeeDTO employeeDto = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(employeeDto);
     }
 
     @GetMapping("/department/{departmentId}")
-    public ResponseEntity<List<EmployeeDto>> getEmployeeByDepartmentId(@PathVariable Long departmentId){
-        List<EmployeeDto> employeeDtos = employeeService.getEmployeesByDepartmentId(departmentId);
+    public ResponseEntity<List<EmployeeDTO>> getEmployeeByDepartmentId(@PathVariable Long departmentId){
+        List<EmployeeDTO> employeeDtos = employeeService.getEmployeesByDepartmentId(departmentId);
         return ResponseEntity.ok(employeeDtos);
     }
 
     @GetMapping("/organization/{organizationId}")
-    public ResponseEntity<List<EmployeeDto>> getEmployeesByOrganizationId(@PathVariable Long organizationId){
-        List<EmployeeDto> employeeDtos = employeeService.getEmployeesByOrganizationId(organizationId);
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByOrganizationId(@PathVariable Long organizationId){
+        List<EmployeeDTO> employeeDtos = employeeService.getEmployeesByOrganizationId(organizationId);
         return ResponseEntity.ok(employeeDtos);
     }
 
