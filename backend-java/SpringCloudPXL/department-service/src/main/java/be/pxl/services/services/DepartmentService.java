@@ -2,10 +2,10 @@ package be.pxl.services.services;
 
 import be.pxl.services.api.request.DepartmentRequest;
 import be.pxl.services.api.response.DepartmentDTO;
+import be.pxl.services.api.response.DepartmentDTOWithoutEmployee;
 import be.pxl.services.api.response.EmployeeDTO;
 import be.pxl.services.domain.Department;
 import be.pxl.services.repository.DepartmentRepository;
-import be.pxl.services.repository.EmployeeRepository;
 import be.pxl.services.services.components.EmployeeClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,5 +40,27 @@ public class DepartmentService implements IDepartmentService {
         );
 
         departmentRepository.save(department);
+    }
+
+    @Override
+    public DepartmentDTO getDepartmentById(Long id) {
+        return departmentRepository.findById(id).map(this::convertToDepartmentDto).orElse(null);
+    }
+
+    @Override
+    public List<DepartmentDTO> getDepartmentsByOrganizationId(Long organizationId) {
+        return departmentRepository.getDepartmentsByOrganizationId(organizationId).stream().map(this::convertToDepartmentDto).toList();
+    }
+
+    @Override
+    public List<DepartmentDTOWithoutEmployee> getDepartmentsByOrganizationIdWithoutEmployees(Long organizationId) {
+        return departmentRepository.getDepartmentsByOrganizationId(organizationId).stream().map(department -> {
+            return new DepartmentDTOWithoutEmployee(
+                    department.getId(),
+                    department.getOrganizationId(),
+                    department.getName(),
+                    department.getPosition()
+            );
+        }).toList();
     }
 }
