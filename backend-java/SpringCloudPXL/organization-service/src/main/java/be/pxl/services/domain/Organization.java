@@ -7,25 +7,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "deparment")
+@Table(name = "organization")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
+public class Organization {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long organizationId;
     private String name;
-    private String position;
+    private String address;
 
-    public Department(Long organizationId, String name, String position) {
-        this.organizationId = organizationId;
+    public Organization(String name, String address) {
         this.name = name;
-        this.position = position;
+        this.address = address;
     }
-
 
 }
