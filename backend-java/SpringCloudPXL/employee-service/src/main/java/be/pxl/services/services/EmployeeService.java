@@ -1,7 +1,9 @@
 package be.pxl.services.services;
 
 import be.pxl.services.api.request.EmployeeRequest;
+import be.pxl.services.api.request.NotificationRequest;
 import be.pxl.services.api.response.EmployeeDTO;
+import be.pxl.services.client.NotificationClient;
 import be.pxl.services.domain.Employee;
 import be.pxl.services.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 public class EmployeeService implements IEmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final NotificationClient notificationClient;
 
     @Override
     public List<EmployeeDTO> getAllEmployees() {
@@ -32,6 +35,12 @@ public class EmployeeService implements IEmployeeService {
         );
 
         employeeRepository.save(employee);
+
+
+        NotificationRequest notification = new NotificationRequest("Wout", "Tom", "New employee", "Employee created");
+        notificationClient.sendNotification(notification);
+
+
     }
 
     @Override
