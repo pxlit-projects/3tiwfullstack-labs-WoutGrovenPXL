@@ -4,14 +4,13 @@ import be.pxl.services.api.request.DepartmentRequest;
 import be.pxl.services.api.response.DepartmentDTO;
 import be.pxl.services.api.response.DepartmentDTOWithoutEmployee;
 import be.pxl.services.api.response.EmployeeDTO;
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Department;
 import be.pxl.services.repository.DepartmentRepository;
-import be.pxl.services.services.components.EmployeeClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public DepartmentDTO convertToDepartmentDto(Department department) {
-        List<EmployeeDTO> employees = employeeClient.getEmployeesByDepartment(department.getId());
+        List<EmployeeDTO> employees = employeeClient.getEmployeesByDepartmentId(department.getId());
         return new DepartmentDTO(department.getId(), department.getOrganizationId(), department.getName(), department.getPosition(), employees);
     }
 

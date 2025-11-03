@@ -2,9 +2,10 @@ package be.pxl.services.services;
 
 import be.pxl.services.api.request.OrganizationRequest;
 import be.pxl.services.api.response.*;
+import be.pxl.services.client.DepartmentClient;
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Organization;
 import be.pxl.services.repository.OrganizationRepository;
-import be.pxl.services.services.components.RestClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,8 @@ import java.util.List;
 public class OrganizationService implements IOrganizationService{
 
     private final OrganizationRepository organizationRepository;
-    private final RestClient restClient;
+    private final EmployeeClient employeeClient;
+    private final DepartmentClient departmentClient;
 
     @Override
     public OrganizationDTO getOrganizationById(Long id) {
@@ -43,7 +45,7 @@ public class OrganizationService implements IOrganizationService{
 
     @Override
     public OrganizationDTOWithEmployees getOrganizationWithEmployees(Long organizationId) {
-        List<EmployeeDTO> employees = restClient.getEmployeesByOrganization(organizationId);
+        List<EmployeeDTO> employees = employeeClient.getEmployeesByOrganization(organizationId);
         OrganizationDTO organizationDTO = getOrganizationById(organizationId);
 
         return new OrganizationDTOWithEmployees(
@@ -56,7 +58,7 @@ public class OrganizationService implements IOrganizationService{
 
     @Override
     public OrganizationDTOWithDepartments getOrganizationWithDepartments(Long organizationId) {
-        List<DepartmentDTO> departments = restClient.getDepartmentsByOrganization(organizationId);
+        List<DepartmentDTO> departments = departmentClient.getDepartmentsByOranizationId(organizationId);
         OrganizationDTO organizationDTO = getOrganizationById(organizationId);
 
         return new OrganizationDTOWithDepartments(
@@ -69,8 +71,8 @@ public class OrganizationService implements IOrganizationService{
 
     @Override
     public OrganizationDTOWithDepartmentsAndEmployees getOrganizationWithDepartmentsAndEmployees(Long organizationId) {
-        List<DepartmentDTO> departments = restClient.getDepartmentsByOrganization(organizationId);
-        List<EmployeeDTO> employees = restClient.getEmployeesByOrganization(organizationId);
+        List<DepartmentDTO> departments = departmentClient.getDepartmentsByOranizationId(organizationId);
+        List<EmployeeDTO> employees = employeeClient.getEmployeesByOrganization(organizationId);
         OrganizationDTO organizationDTO = getOrganizationById(organizationId);
 
         return new OrganizationDTOWithDepartmentsAndEmployees(
