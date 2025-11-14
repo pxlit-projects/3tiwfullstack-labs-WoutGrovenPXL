@@ -1,9 +1,11 @@
 package be.pxl.services.services;
 
+import be.pxl.services.api.request.EmployeeRequest;
 import be.pxl.services.api.request.NotificationRequest;
 import be.pxl.services.domain.Notification;
 import be.pxl.services.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,4 +26,5 @@ public class NotificationService implements INotificationService {
 
         notificationRepository.save(notification);
     }
+
 }

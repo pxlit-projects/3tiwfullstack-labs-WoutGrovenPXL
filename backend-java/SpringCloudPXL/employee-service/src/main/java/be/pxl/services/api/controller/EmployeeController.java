@@ -4,6 +4,10 @@ import be.pxl.services.api.request.EmployeeRequest;
 import be.pxl.services.api.response.EmployeeDTO;
 import be.pxl.services.services.IEmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +20,14 @@ import java.util.List;
 public class EmployeeController {
 
     private final IEmployeeService employeeService;
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping
     public List<EmployeeDTO> getEmployees() {
+        logger.info("getEmployees called");
         return employeeService.getAllEmployees();
     }
 

@@ -1,0 +1,64 @@
+services:
+  mysql-organization:
+    image: mysql:8.0
+    container_name: mysql-organizationservice
+    restart: always
+    environment:
+      MYSQL_DATABASE: organizationservice_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3308:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_organization_data:/var/lib/mysql
+
+  mysql-notification:
+    image: mysql:8.0
+    container_name: mysql-notificationservice
+    restart: always
+    environment:
+      MYSQL_DATABASE: notification_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3309:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_notification_data:/var/lib/mysql
+
+  mysql-employee:
+    image: mysql:8.0
+    container_name: mysql-employeeservice
+    restart: always
+    environment:
+      MYSQL_DATABASE: employeeservice_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_employee_data:/var/lib/mysql
+
+  mysql-department:
+    image: mysql:8.0
+    container_name: mysql-departmentservice
+    restart: always
+    environment:
+      MYSQL_DATABASE: departmentservice_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_department_data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+volumes:
+  mysql_organization_data:
+  mysql_notification_data:
+  mysql_department_data:
+  mysql_employee_data:
